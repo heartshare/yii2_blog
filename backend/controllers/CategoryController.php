@@ -2,30 +2,16 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\Category;
 use common\models\CategorySearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use backend\controllers\CommonController;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
+ * @package backend\controllers
  */
-class CategoryController extends Controller
+class CategoryController extends CommonController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Category models.
      * @return mixed
