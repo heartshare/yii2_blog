@@ -2,30 +2,16 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\ArticleComments;
 use common\models\ArticleCommentsSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use backend\controllers\CommonController;
 
 /**
  * ArticleCommentsController implements the CRUD actions for ArticleComments model.
+ * @package backend\controllers
  */
-class ArticleCommentsController extends Controller
+class ArticleCommentsController extends CommonController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all ArticleComments models.
      * @return mixed
