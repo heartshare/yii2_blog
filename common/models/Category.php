@@ -36,7 +36,8 @@ class Category extends \yii\db\ActiveRecord
             [['category_name'], 'string', 'max' => 45],
             [['slug', 'description'], 'string', 'max' => 255],
             [['category_name'], 'unique'],
-            [['slug'], 'unique']
+            [['slug'], 'unique'],
+            ['sort', 'default', 'value' => 0]
         ];
     }
 
@@ -53,6 +54,15 @@ class Category extends \yii\db\ActiveRecord
             'parent_id' => Yii::t('app', 'Parent ID'),
             'description' => Yii::t('app', 'Description'),
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->slug = empty($this->slug) ? $this->category_name : $this->slug;
+            return true;
+        }
+        return false;
     }
 
     /**
