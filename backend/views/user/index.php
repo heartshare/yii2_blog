@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\grid\DataColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\UserSearch */
@@ -17,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'User',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+            'modelClass' => 'User',
+        ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -32,18 +33,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'nickname',
             'email:email',
             'gender',
-            // 'phone',
+            'phone',
             // 'password_hash',
             // 'profile',
             // 'avatar',
-            // 'create_time',
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'create_time',
+                'format' => ['date', 'php:Y-m-d'],
+                'label' => '注册时间',
+            ],
             // 'update_time',
-            // 'active_time',
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'active_time',
+                'format' => ['date', 'php:Y-m-d'],
+                'label' => '上次活动时间',
+            ],
             // 'status',
             // 'auth_key',
             // 'password_reset_token',
             // 'site',
-            // 'role_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
