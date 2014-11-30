@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\Article;
 use common\models\ArticleSearch;
 use backend\controllers\CommonController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * ArticleController implements the CRUD actions for Article model.
@@ -51,6 +53,7 @@ class ArticleController extends CommonController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $model->loadDefaultValues();
             return $this->render('create', [
                 'model' => $model,
             ]);
