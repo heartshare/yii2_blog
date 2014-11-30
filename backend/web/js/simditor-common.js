@@ -3,6 +3,6 @@
  */
 $(function(){
     var editor = new Simditor({
-        textarea: $('.editor')
+        textarea: $('#editor')
     });
 })
