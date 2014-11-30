@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%article}}".
@@ -29,8 +31,13 @@ use Yii;
  * @property Category $category
  * @property ArticleComments[] $articleComments
  */
-class Article extends \yii\db\ActiveRecord
+class Article extends ActiveRecord
 {
+    const TYPE_ARTICLE = 0;
+    const STATUS_PUBLISH = 1;
+    const STATUS_VERIFY = 0;
+    const STATUS_LUCK = 2;
+
     /**
      * @inheritdoc
      */
@@ -49,8 +56,28 @@ class Article extends \yii\db\ActiveRecord
             [['content', 'excerpt'], 'string'],
             [['create_time', 'update_time', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
-            [['title'], 'unique'],
-            [['slug'], 'unique']
+            [['title'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [['slug'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [
+                'status',
+                'in',
+                'range' => [
+                    self::STATUS_VERIFY,
+                    self::STATUS_LUCK,
+                    self::STATUS_PUBLISH
+                ],
+                'message' => '{attribute}非法'
+            ],
+            ['status', 'default', 'value' => self::STATUS_VERIFY],
+            [
+                'type',
+                'in',
+                'range' => [
+                    self::TYPE_ARTICLE
+                ],
+                'message' => '{attribute}非法'
+            ],
+            ['type', 'default', 'value' => self::TYPE_ARTICLE],
         ];
     }
 
@@ -81,6 +108,33 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_time', 'update_time'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                ],
+            ]
+        ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->user_id = Yii::$app->user->id;
+            if ($this->isNewRecord) {
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getUser()
@@ -102,5 +156,21 @@ class Article extends \yii\db\ActiveRecord
     public function getArticleComments()
     {
         return $this->hasMany(ArticleComments::className(), ['article_id' => 'id']);
+    }
+
+    public function getTypesOptions()
+    {
+        return [
+            self::TYPE_ARTICLE => '文章'
+        ];
+    }
+
+    public function getStatusOptions()
+    {
+        return [
+            self::STATUS_VERIFY => '待审核',
+            self::STATUS_PUBLISH => '发布',
+            self::STATUS_LUCK => '锁定'
+        ];
     }
 }
