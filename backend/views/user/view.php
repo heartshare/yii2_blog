@@ -44,7 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'auth_key',
             'password_reset_token',
             'site',
-            'role_id',
         ],
     ]) ?>
 
