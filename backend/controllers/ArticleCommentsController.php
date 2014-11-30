@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\ArticleComments;
 use common\models\ArticleCommentsSearch;
 use backend\controllers\CommonController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * ArticleCommentsController implements the CRUD actions for ArticleComments model.
