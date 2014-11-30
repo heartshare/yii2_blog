@@ -8,6 +8,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Article;
 
 /**
  * Site controller
@@ -63,7 +64,15 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $articles = Article::find()
+            ->where(['status' => Article::STATUS_PUBLISH, 'password' => ''])
+            ->orderBy('create_time desc')
+            ->limit(3)
+            ->asArray()
+            ->all();
+        return $this->render('index',
+            ['articles' => $articles]
+        );
     }
 
     public function actionContact()
