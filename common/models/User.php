@@ -2,6 +2,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Event;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -27,7 +28,6 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $password_reset_token
  * @property string $site
- * @property string $role_id
  *
  * @property string $password
  *
@@ -78,13 +78,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['gender', 'phone', 'create_time', 'update_time', 'active_time', 'status', 'role_id'], 'integer'],
+            [['gender', 'phone', 'create_time', 'update_time', 'active_time', 'status'], 'integer'],
             [['username', 'nickname'], 'string', 'max' => 45],
             [['email', 'password_hash', 'profile', 'site'], 'string', 'max' => 255],
             [['avatar', 'auth_key', 'password_reset_token'], 'string', 'max' => 100],
             [['username'], 'unique'],
             [['nickname'], 'unique'],
             [['email'], 'unique'],
+            ['email', 'email'],
             ['status', 'default', 'value' => self::STATUS_VERIFY],
             [
                 'status',
@@ -97,7 +98,7 @@ class User extends ActiveRecord implements IdentityInterface
                 ]
             ],
             ['gender', 'default', 'value' => self::GENDER_BOY],
-            ['password', 'safe']
+            ['passowrd', 'string','max'=>18],
         ];
     }
 
@@ -123,7 +124,6 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'site' => Yii::t('app', 'Site'),
-            'role_id' => Yii::t('app', 'Role ID'),
             'password' => Yii::t('app', 'password')
         ];
     }
@@ -131,15 +131,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
+            //TODO 这儿遇到一个问题：post数据有password，但是不能赋予当前模型的password字段，已经赋予password为safe了，望知情人指导
             if (!empty($this->password)) {
                 $this->setPassword($this->password);
             }
             if (empty($this->nickname)) {
                 $this->nickname = $this->username;
-            }
-            if (empty($this->role_id)) {
-                //TODO Yii2的RBAC还不会，所以先随机读取一个^_^
-                $this->role_id = \common\models\Role::find()->one()->id;
             }
             if ($this->isNewRecord) {
             }
@@ -321,8 +318,4 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(ArticleComments::className(), ['user_id' => 'id']);
     }
 
-    public function getRoles()
-    {
-        return $this->hasOne(Role::className(), ['id' => 'role_id']);
-    }
 }
