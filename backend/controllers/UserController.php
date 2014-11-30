@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\User;
 use common\models\UserSearch;
 use backend\controllers\CommonController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * UserController implements the CRUD actions for User model.
