@@ -1,11 +1,15 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
+use backend\assets\SimditorAsset;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Article */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form yii\bootstrap\ActiveForm */
+SimditorAsset::register($this);
+$categoryList = ArrayHelper::map(\common\models\Category::find()->asArray()->all(),'id','category_name');
 ?>
 
 <div class="article-form">
@@ -14,17 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'excerpt')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'create_time')->textInput(['maxlength' => 10]) ?>
+    <?= $form->field($model, 'content')->textarea(['id'=>'editor']) ?>
 
-    <?= $form->field($model, 'update_time')->textInput(['maxlength' => 10]) ?>
+    <?= $form->field($model, 'type')->dropDownList($model->getTypesOptions()) ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'status')->inline()->radioList($model->getStatusOptions()) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'top')->textInput() ?>
+    <?= $form->field($model, 'top')->inline()->radioList(['否','是']) ?>
 
     <?= $form->field($model, 'view')->textInput(['maxlength' => 10]) ?>
 
@@ -32,17 +34,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'excerpt')->textarea(['rows' => 6]) ?>
-
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'allow_comment')->textInput() ?>
+    <?= $form->field($model, 'allow_comment')->inline()->radioList(['否','是']) ?>
 
     <?= $form->field($model, 'comments_total')->textInput(['maxlength' => 10]) ?>
 
-    <?= $form->field($model, 'user_id')->textInput(['maxlength' => 10]) ?>
-
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList($categoryList) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
