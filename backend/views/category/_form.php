@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 /* @var $form yii\widgets\ActiveForm */
 $parentCategory = ArrayHelper::map($model::findAll(['parent_id' => 0]), 'id', 'category_name');
 $parentCategory = ArrayHelper::merge(['顶级分类'], $parentCategory);
+unset($parentCategory[$model->id]);
 ?>
 
 <div class="category-form">
