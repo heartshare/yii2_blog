@@ -3,6 +3,8 @@ namespace backend\controllers;
 
 use common\models\LoginForm;
 use backend\controllers\CommonController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * Site controller
