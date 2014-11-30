@@ -5,6 +5,8 @@ namespace backend\controllers;
 use common\models\Category;
 use common\models\CategorySearch;
 use backend\controllers\CommonController;
+use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
