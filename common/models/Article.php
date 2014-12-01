@@ -52,12 +52,13 @@ class Article extends ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'excerpt'], 'required'],
+            [['content', 'excerpt', 'title'], 'required', 'message' => '{attribute}不能为空'],
             [['content', 'excerpt'], 'string'],
             [['create_time', 'update_time', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
             [['title'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
             [['slug'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [['title', 'slug'], 'filter', 'filter' => 'trim'],
             [
                 'status',
                 'in',
@@ -127,6 +128,7 @@ class Article extends ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             $this->user_id = Yii::$app->user->id;
+            $this->slug = empty($this->slug) ? $this->title : $this->slug;
             if ($this->isNewRecord) {
             }
             return true;
