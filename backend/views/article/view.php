@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\DataColumn;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Article */
@@ -29,13 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'attribute' => 'user.nickname',
+                'label' => '作者'
+            ],
+            'category.category_name',
             'title',
             'type',
             'status',
             'excerpt:ntext',
             'content:html',
-            'create_time',
-            'update_time',
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'create_time',
+                'format' => ['date', 'php:Y-m-d H:i:s']
+            ],
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'update_time',
+                'format' => ['date', 'php:Y-m-d H:i:s']
+            ],
             'top',
             'view',
             'sort',
@@ -43,8 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'password',
             'allow_comment',
             'comments_total',
-            'user_id',
-            'category_id',
         ],
     ]) ?>
 
