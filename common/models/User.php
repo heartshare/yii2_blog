@@ -98,7 +98,6 @@ class User extends ActiveRecord implements IdentityInterface
                 ]
             ],
             ['gender', 'default', 'value' => self::GENDER_BOY],
-            ['passowrd', 'string','max'=>18],
         ];
     }
 
