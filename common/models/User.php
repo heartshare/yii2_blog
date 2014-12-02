@@ -317,4 +317,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasMany(ArticleComments::className(), ['user_id' => 'id']);
     }
 
+    public static function getGendersOptions()
+    {
+        return [
+            self::GENDER_GIRL => '女',
+            self::GENDER_BOY => '男'
+        ];
+    }
+
 }
