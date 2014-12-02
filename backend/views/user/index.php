@@ -40,15 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => DataColumn::className(),
                 'attribute' => 'create_time',
-                'format' => ['date', 'php:Y-m-d'],
-                'label' => '注册时间',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             // 'update_time',
             [
                 'class' => DataColumn::className(),
                 'attribute' => 'active_time',
-                'format' => ['date', 'php:Y-m-d'],
-                'label' => '上次活动时间',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             // 'status',
             // 'auth_key',
