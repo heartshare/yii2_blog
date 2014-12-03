@@ -19,11 +19,15 @@ $this->title = 'My Blog';
         <div class="row">
             <?php foreach($articles as $article): ?>
             <div class="col-lg-4">
-                <h2><a href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>"><?= Html::encode($article['title']) ?></a></h2>
+                <h2>
+                    <a href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>"><?= Html::encode($article['title']) ?></a>
+                </h2>
 
                 <p><?= Html::encode($article['excerpt']) ?></p>
 
-                <p><a class="btn btn-default" href="<?= Url::toRoute(['article/view']) ?>">Read more... &raquo;</a></p>
+                <p>
+                    <a class="btn btn-default" href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>">Read more... &raquo;</a>
+                </p>
             </div>
             <?php endforeach; ?>
         </div>
