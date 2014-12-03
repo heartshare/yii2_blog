@@ -11,23 +11,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h3><?= Html::encode($article['title']) ?></h3>
 
-<div id="info" class="row">
-    <div class="col-lg-4 col-sm-6">
+<div id="article-info" class="row">
+    <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-calendar"></i>&nbsp;
-        由<?= $article['user']['nickname'] ?>发布于：
-        <?= date('Y-m-d H:i:s', $article['create_time']) ?>
+        发布于公元<?= date('Y-m-d H:i:s', $article['create_time']) ?>
     </div>
-    <div class="col-lg-4 col-sm-6">
+    <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-list"></i>&nbsp;
-        <?= Html::a($article['category']['category_name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
+        所属分类：<?= Html::a($article['category']['category_name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
     </div>
-    <div class="col-lg-2 col-xs-6">
+    <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-eye-open"></i>&nbsp;
-        热度：<?= $article['view'] ?>°
+        看热闹打酱油的有<?= $article['view'] ?>人
     </div>
-    <div class="col-lg-2 col-xs-6">
+    <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-comment"></i>&nbsp;
-        已有<?= $article['comments_total'] ?>人发表读后感
+        <?php if($article['comments_total'] > 0): ?>
+            已有<?= $article['comments_total'] ?>人发表读后感
+        <?php else: ?>
+            还没人鸟我哟o(╯□╰)o
+        <?php endif; ?>
     </div>
 </div>
 
