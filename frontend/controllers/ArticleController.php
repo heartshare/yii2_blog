@@ -4,13 +4,20 @@ namespace frontend\controllers;
 
 use yii\web\Controller;
 use common\models\Article;
-use yii\widgets\PjaxAsset;
+use yii\web\NotFoundHttpException;
 
 class ArticleController extends Controller
 {
     public function actionView($id)
     {
-        $article = Article::find()->with(['category', 'user'])->where('id =:id', [':id' => $id])->asArray()->one();
+        if (!$article = Article::find()->with(['category', 'user'])->where('id =:id', [':id' => $id])->one()) {
+            throw new NotFoundHttpException('ID为' . $id . '的文章被站长搞丢了诶o(╯□╰)o');
+        }
+        /* TODO 防刷新用的，暂时没有啥好解决办法，就酱紫用着吧！ */
+        if (!\Yii::$app->session->get('article_view_' . $id)) {
+            $article->updateCounters(['view' => 1]);
+            \Yii::$app->session->set('article_view_' . $id, true);
+        }
         return $this->render('view',
             ['article' => $article]
         );
