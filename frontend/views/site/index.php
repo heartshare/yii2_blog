@@ -19,9 +19,9 @@ $this->title = 'My Blog';
         <div class="row">
             <?php foreach($articles as $article): ?>
             <div class="col-md-4">
-                <h2>
+                <h3>
                     <a href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>"><?= Html::encode($article['title']) ?></a>
-                </h2>
+                </h3>
 
                 <p><?= Html::encode($article['excerpt']) ?></p>
 
