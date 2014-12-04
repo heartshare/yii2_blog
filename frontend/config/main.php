@@ -28,6 +28,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+            'rules' => [
+                'index' => 'site/index',
+                'about' => 'site/about',
+                'contact' => 'site/contact',
+                [
+                    'pattern' => 'article/<id:\d+>',
+                    'route' => 'article/view',
+                    'defaults' => ['id' => 1],
+                ]
+            ]
+        ]
     ],
     'params' => $params,
 ];
