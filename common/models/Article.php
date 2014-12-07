@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\data\Pagination;
 use yii\db\ActiveRecord;
 
 /**
@@ -173,6 +174,56 @@ class Article extends ActiveRecord
             self::STATUS_VERIFY => '待审核',
             self::STATUS_PUBLISH => '发布',
             self::STATUS_LUCK => '锁定'
+        ];
+    }
+
+    /**
+     * 获得最新的文章列表
+     * @param null|string $categoryId 分类ID
+     * @return array 文章列表和分页
+     */
+    public static function getNewArticleList($categoryId = null)
+    {
+        $model = static::find()
+            ->where(['status' => self::STATUS_PUBLISH])
+            ->with(['category', 'user'])
+            ->orderBy('create_time DESC');
+        if (!empty($categoryId)) {
+            $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
+        }
+        $countQuery = clone $model;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        return [
+            'list' => $model
+                ->limit($pages->limit)
+                ->offset($pages->offset)
+                ->asArray()
+                ->all(),
+            'pages' => $pages
+        ];
+    }
+
+    /**
+     * 获取热门文章
+     * @param null|string $categoryId 分类ID
+     * @return array 文章列表和分页
+     */
+    public static function getHotArticleList($categoryId = null)
+    {
+        $model = static::find()
+            ->where(['status' => self::STATUS_PUBLISH])
+            ->orderBy('view DESC,comments_total DESC');
+        if (!empty($categoryId)) {
+            $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
+        }
+        $countQuery = clone $model;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        return [
+            'list' => $model->limit($pages->limit)
+                ->offset($pages->offset)
+                ->asArray()
+                ->all(),
+            'pages' => $pages
         ];
     }
 }
