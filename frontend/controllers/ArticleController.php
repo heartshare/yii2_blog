@@ -23,4 +23,20 @@ class ArticleController extends Controller
         );
     }
 
+    /**
+     * 文章列表页
+     * @return string
+     */
+    public function actionList()
+    {
+        $newArticles = Article::getNewArticleList();
+        $hotArticles = Article::getHotArticleList();
+        return $this->render('list',
+            [
+                'newArticles' => $newArticles,
+                'hotArticles' => $hotArticles
+            ]
+        );
+    }
+
 }
