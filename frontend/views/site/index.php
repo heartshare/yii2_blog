@@ -7,11 +7,11 @@ $this->title = 'My Blog';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>素年锦时</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">夫君子之行，静以修身，俭以养德。非淡泊无以明志，非宁静无以致远.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['article/list']) ?>">查看博文列表</a></p>
     </div>
 
     <div class="body-content">
