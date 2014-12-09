@@ -180,19 +180,25 @@ class Article extends ActiveRecord
     /**
      * 获得最新的文章列表
      * @param null|string $categoryId 分类ID
+     * @param bool $isHot 是否热门
      * @return array 文章列表和分页
      */
-    public static function getNewArticleList($categoryId = null)
+    public static function getArticleList($categoryId = null, $isHot = false)
     {
         $model = static::find()
             ->where(['status' => self::STATUS_PUBLISH])
-            ->with(['category', 'user'])
-            ->orderBy('create_time DESC');
+            ->with(['category', 'user']);
         if (!empty($categoryId)) {
             $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
         }
         $countQuery = clone $model;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        //如果是热门，则按查看次数和评论次数排序；否则按发表时间排序
+        if ($isHot) {
+            $model->orderBy('view DESC,comments_total DESC');
+        } else {
+            $model->orderBy('create_time DESC');
+        }
         return [
             'list' => $model
                 ->limit($pages->limit)
@@ -204,49 +210,12 @@ class Article extends ActiveRecord
     }
 
     /**
-     * 获取热门文章
-     * @param null|string $categoryId 分类ID
-     * @return array 文章列表和分页
+     * 根据文章ID获取单条文章
+     * @param integer $id 文章ID
+     * @return array|null
      */
-    public static function getHotArticleList($categoryId = null)
+    public static function getArticle($id)
     {
-        $model = static::find()
-            ->where(['status' => self::STATUS_PUBLISH])
-            ->orderBy('view DESC,comments_total DESC');
-        if (!empty($categoryId)) {
-            $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
-        }
-        $countQuery = clone $model;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        return [
-            'list' => $model->limit($pages->limit)
-                ->offset($pages->offset)
-                ->asArray()
-                ->all(),
-            'pages' => $pages
-        ];
-    }
-
-    /**
-     * 根据分类获取文章
-     * @param integer $categoryId 分类ID
-     * @return array|null 文章列表和分页
-     */
-    public static function getArticlesByCategoryId($categoryId)
-    {
-        $model = static::find()
-            ->where(['status' => self::STATUS_PUBLISH])
-            ->orderBy('create_time DESC');
-        $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
-        $countQuery = clone $model;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        return [
-            'list' => $model->limit($pages->limit)
-                ->with(['category', 'user'])
-                ->offset($pages->offset)
-                ->asArray()
-                ->all(),
-            'pages' => $pages
-        ];
+        return $article = static::find()->with(['user', 'category'])->where('id = :id', [':id' => $id])->asArray()->one();
     }
 }
