@@ -226,4 +226,27 @@ class Article extends ActiveRecord
             'pages' => $pages
         ];
     }
+
+    /**
+     * 根据分类获取文章
+     * @param integer $categoryId 分类ID
+     * @return array|null 文章列表和分页
+     */
+    public static function getArticlesByCategoryId($categoryId)
+    {
+        $model = static::find()
+            ->where(['status' => self::STATUS_PUBLISH])
+            ->orderBy('create_time DESC');
+        $model->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
+        $countQuery = clone $model;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        return [
+            'list' => $model->limit($pages->limit)
+                ->with(['category', 'user'])
+                ->offset($pages->offset)
+                ->asArray()
+                ->all(),
+            'pages' => $pages
+        ];
+    }
 }
