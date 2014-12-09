@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\data\Pagination;
 
 /**
  * This is the model class for table "{{%category}}".
@@ -72,5 +73,29 @@ class Category extends \yii\db\ActiveRecord
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
+    }
+
+    /**
+     * 根据分类slug获得分类
+     * @param string $slug
+     * @return int|null
+     */
+    public static function getCategoryBySlug($slug)
+    {
+        if ($category = static::findOne(['slug' => $slug])) {
+            return $category;
+        };
+        return null;
+    }
+
+    public static function getCategoryList()
+    {
+        $model = static::find();
+        $countQuery = clone $model;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        return [
+            'list' => $model->all(),
+            'pages' => $pages
+        ];
     }
 }
