@@ -37,6 +37,10 @@ return [
                     'pattern' => 'article/<id:\d+>',
                     'route' => 'article/view',
                     'defaults' => ['id' => 1],
+                ],
+                [
+                    'pattern' => 'category/<slug:\w+>',
+                    'route' => 'category/category-articles'
                 ]
             ]
         ]
