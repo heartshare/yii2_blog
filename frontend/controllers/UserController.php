@@ -60,7 +60,7 @@ class UserController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
+        Yii::$app->session->setFlash('success', '退出登录成功^_^！');
         return $this->goHome();
     }
 
@@ -69,6 +69,7 @@ class UserController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
+                Yii::$app->session->setFlash('success', '恭喜^_^，注册成功，请等待管理员审核！');
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
