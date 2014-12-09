@@ -47,12 +47,25 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </div>
     <div class="sidebar col-lg-4">
-        <div class="panel panel-default">
+        <div class="panel panel-default category-description">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-book"></i>&nbsp;
                 分类介绍
             </div>
             <div class="panel-body"><?= $curCategory['description'] ?></div>
+        </div>
+
+        <div class="panel panel-default hot-article">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-fire"></i>&nbsp;<?= $curCategory['category_name'] ?>的热门文章
+            </div>
+            <ul class="list-group">
+                <?php foreach ($hotArticles['list'] as $article): ?>
+                    <li class="list-group-item"><?= Html::a($article['title'],
+                            ['article/view', 'id' => $article['id']]) ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </div>
 </div>
