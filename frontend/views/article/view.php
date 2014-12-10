@@ -5,7 +5,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 
 $this->title = $article['title'];
-$this->params['breadcrumbs'][] = ['label' => $article['category']['category_name'], 'url' => ['/category/' . $article['category']['slug']]];
+$this->params['breadcrumbs'][] = ['label' => $article['category']['name'], 'url' => ['/category/' . $article['category']['slug']]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-list"></i>&nbsp;
-        所属分类：<?= Html::a($article['category']['category_name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
+        所属分类：<?= Html::a($article['category']['name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
     </div>
     <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-eye-open"></i>&nbsp;
