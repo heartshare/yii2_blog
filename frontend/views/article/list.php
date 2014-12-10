@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </span>
                     <span class="col-lg-3 col-xs-6">
                         <i class="glyphicon glyphicon-list"></i>
-                        分类：<?= Html::a($article['category']['category_name'],
+                        分类：<?= Html::a($article['category']['name'],
                             ['category/' . $article['category']['slug']]) ?>
                     </span>
                     <span class="col-lg-3 col-xs-8">
