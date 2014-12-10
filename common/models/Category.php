@@ -9,7 +9,7 @@ use yii\data\Pagination;
  * This is the model class for table "{{%category}}".
  *
  * @property integer $id
- * @property string $category_name
+ * @property string $name
  * @property string $slug
  * @property string $sort
  * @property integer $parent_id
@@ -34,10 +34,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['sort', 'parent_id'], 'integer'],
-            [['category_name'], 'required', 'message' => '{attribute}不能为空'],
-            [['category_name'], 'string', 'max' => 45],
+            [['name'], 'required', 'message' => '{attribute}不能为空'],
+            [['name'], 'string', 'max' => 45],
             [['slug', 'description'], 'string', 'max' => 255],
-            [['category_name'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [['name'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
             [['slug'], 'unique'],
             ['sort', 'default', 'value' => 0]
         ];
@@ -50,7 +50,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'category_name' => Yii::t('app', 'Category Name'),
+            'name' => Yii::t('app', 'Category Name'),
             'slug' => Yii::t('app', 'Slug'),
             'sort' => Yii::t('app', 'Sort'),
             'parent_id' => Yii::t('app', 'Parent ID'),
@@ -61,7 +61,7 @@ class Category extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            $this->slug = empty($this->slug) ? $this->category_name : $this->slug;
+            $this->slug = empty($this->slug) ? $this->name : $this->slug;
             return true;
         }
         return false;
