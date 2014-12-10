@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'user.nickname',
                 'label' => '作者'
             ],
-            'category.category_name',
+            'category.name',
             'title',
             'type',
             'status',
