@@ -29,7 +29,7 @@ AppAsset::register($this);
         'brandLabel' => '<i class="glyphicon glyphicon-home"></i>&nbsp;' . Yii::$app->params['sitename'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
     $menuItems = [
