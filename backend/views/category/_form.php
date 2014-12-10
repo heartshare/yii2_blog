@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */
 /* @var $form yii\widgets\ActiveForm */
-$parentCategory = ArrayHelper::map($model::findAll(['parent_id' => 0]), 'id', 'category_name');
+$parentCategory = ArrayHelper::map($model::findAll(['parent_id' => 0]), 'id', 'name');
 $parentCategory = ArrayHelper::merge(['顶级分类'], $parentCategory);
 unset($parentCategory[$model->id]);
 ?>
@@ -16,7 +16,7 @@ unset($parentCategory[$model->id]);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'category_name')->textInput(['maxlength' => 45]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 45]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => 255]) ?>
 
