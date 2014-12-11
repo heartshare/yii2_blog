@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 /* @var $model common\models\Article */
 /* @var $form yii\bootstrap\ActiveForm */
 SimditorAsset::register($this);
-$categoryList = ArrayHelper::map(\common\models\Category::find()->asArray()->all(),'id','category_name');
+$categoryList = ArrayHelper::map(\common\models\Category::find()->asArray()->all(),'id','name');
 ?>
 
 <div class="article-form">
