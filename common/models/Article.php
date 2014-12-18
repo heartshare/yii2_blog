@@ -53,12 +53,12 @@ class Article extends ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'excerpt', 'title'], 'required', 'message' => '{attribute}不能为空'],
+            [['content', 'excerpt', 'title'], 'required'],
             [['content', 'excerpt'], 'string'],
             [['create_time', 'update_time', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
-            [['title'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
-            [['slug'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [['title'], 'unique'],
+            [['slug'], 'unique'],
             [['title', 'slug'], 'filter', 'filter' => 'trim'],
             [
                 'status',
@@ -68,7 +68,6 @@ class Article extends ActiveRecord
                     self::STATUS_LUCK,
                     self::STATUS_PUBLISH
                 ],
-                'message' => '{attribute}非法'
             ],
             ['status', 'default', 'value' => self::STATUS_VERIFY],
             [
@@ -77,7 +76,6 @@ class Article extends ActiveRecord
                 'range' => [
                     self::TYPE_ARTICLE
                 ],
-                'message' => '{attribute}非法'
             ],
             ['type', 'default', 'value' => self::TYPE_ARTICLE],
         ];
