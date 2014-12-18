@@ -34,10 +34,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['sort', 'parent_id'], 'integer'],
-            [['name'], 'required', 'message' => '{attribute}不能为空'],
+            [['name'], 'required'],
             [['name'], 'string', 'max' => 45],
             [['slug', 'description'], 'string', 'max' => 255],
-            [['name'], 'unique', 'message' => '{attribute}:"{value}"已经存在~\(≧▽≦)/~啦啦啦'],
+            [['name'], 'unique'],
             [['slug'], 'unique'],
             ['sort', 'default', 'value' => 0]
         ];
