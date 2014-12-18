@@ -7,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $model frontend\models\SignupForm */
 /* @var $form ActiveForm */
 
-$this->title = 'Signup';
+$this->title = Yii::t('app','Signup');
 ?>
 <div class="user-signup">
     <h1><?= Html::encode($this->title) ?></h1>
