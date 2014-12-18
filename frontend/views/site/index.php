@@ -11,7 +11,7 @@ $this->title = Yii::$app->params['sitename'];
 
         <p class="lead">夫君子之行，静以修身，俭以养德。非淡泊无以明志，非宁静无以致远.</p>
 
-        <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['article/list']) ?>">查看博文列表</a></p>
+        <p><a class="btn btn-lg btn-success" href="<?= Url::toRoute(['article/list']) ?>"><?= Yii::t('app','Look Article List') ?></a></p>
     </div>
 
     <div class="body-content">
@@ -26,7 +26,7 @@ $this->title = Yii::$app->params['sitename'];
                 <p><?= Html::encode($article['excerpt']) ?></p>
 
                 <p>
-                    <a class="btn btn-default" href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>">Read more... &raquo;</a>
+                    <a class="btn btn-default" href="<?= Url::toRoute(['article/view', 'id' => $article['id']]) ?>"><?= Yii::t('app','Read more') ?>... &raquo;</a>
                 </p>
             </div>
             <?php endforeach; ?>
