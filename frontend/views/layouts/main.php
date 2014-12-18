@@ -10,6 +10,22 @@ use frontend\widgets\Alert;
 /* @var $content string */
 
 AppAsset::register($this);
+
+$menuItems = [
+    ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+    ['label' => Yii::t('app','About'), 'url' => ['/site/about']],
+    ['label' => Yii::t('app','Contact'), 'url' => ['/site/contact']],
+];
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => Yii::t('app','Signup'), 'url' => ['/user/signup']];
+    $menuItems[] = ['label' => Yii::t('app','Login'), 'url' => ['/user/login']];
+} else {
+    $menuItems[] = [
+        'label' => Yii::t('app','Logout').' (' . Yii::$app->user->identity->username . ')',
+        'url' => ['/user/logout'],
+        'linkOptions' => ['data-method' => 'post']
+    ];
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -32,21 +48,6 @@ AppAsset::register($this);
             'class' => 'navbar-default navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/user/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/user/login']];
-    } else {
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-            'url' => ['/user/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ];
-    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
