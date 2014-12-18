@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = Yii::t('app', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
@@ -37,11 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
             <div class="col-sm-offset-3 col-sm-9" style="color:#999;line-height:3em;">
-                If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+                <?= Yii::t('app', 'If you forgot your password you can') ?><?= Html::a(Yii::t('app', 'Reset') . Yii::t('app', 'Password'), ['user/request-password-reset']) ?>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
