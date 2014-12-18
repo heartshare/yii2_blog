@@ -5,7 +5,7 @@ use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 
-$this->title = '文章列表 - ' . $curCategory['name'];
+$this->title = Yii::t('app', 'Article') . Yii::t('app', 'List') . ' - ' . $curCategory['name'];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="categoryArticles">
@@ -23,19 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="container-fluid row">
                     <span class="col-lg-5 col-xs-6">
                         <i class="glyphicon glyphicon-calendar"></i>
-                        发布日期：<?= date('Y-m-d H:i:s', $article['create_time']) ?>
+                        <?= Yii::t('app', 'Publish Time') ?>：<?= date('Y-m-d H:i:s', $article['create_time']) ?>
                     </span>
                     <span class="col-lg-3 col-xs-6">
                         <i class="glyphicon glyphicon-list"></i>
-                        分类：<?= Html::a($article['category']['name'],
+                        <?= Yii::t('app', 'Category') ?>：<?= Html::a($article['category']['name'],
                             ['category/' . $article['category']['slug']]) ?>
                     </span>
                     <span class="col-lg-3 col-xs-8">
                         <i class="glyphicon glyphicon-user"></i>
-                        作者：<?= $article['user']['nickname'] ?>
+                        <?= Yii::t('app', 'Author') ?>：<?= $article['user']['nickname'] ?>
                     </span>
                     <span class="col-lg-1 col-xs-4">
-                        <?= Html::a('阅读全文',
+                        <?= Html::a(Yii::t('app', 'Read more') . '&raquo;',
                             ['article/view', 'id' => $article['id']],
                             ['class' => 'btn btn-xs btn-default pull-right']) ?>
                     </span>
@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default category-description">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-book"></i>&nbsp;
-                分类介绍
+                <?= Yii::t('app', 'Category') . Yii::t('app', 'Description') ?>
             </div>
             <div class="panel-body"><?= $curCategory['description'] ?></div>
         </div>
