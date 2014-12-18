@@ -115,7 +115,7 @@ class User extends ActiveRecord implements IdentityInterface
             'phone' => Yii::t('app', 'Phone'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'profile' => Yii::t('app', 'Profile'),
-            'avatar' => Yii::t('app', 'avatar'),
+            'avatar' => Yii::t('app', 'Avatar'),
             'create_time' => Yii::t('app', 'Create Time'),
             'update_time' => Yii::t('app', 'Update Time'),
             'active_time' => Yii::t('app', 'Active Time'),
@@ -123,7 +123,7 @@ class User extends ActiveRecord implements IdentityInterface
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'site' => Yii::t('app', 'Site'),
-            'password' => Yii::t('app', 'password')
+            'password' => Yii::t('app', 'Password')
         ];
     }
 
