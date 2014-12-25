@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\ArticleCommentForm;
 use yii\web\Controller;
 use common\models\Article;
 use yii\web\NotFoundHttpException;
@@ -18,8 +19,12 @@ class ArticleController extends Controller
             Article::findOne($id)->updateCounters(['view' => 1]);
             \Yii::$app->session->set('article_view_' . $id, true);
         }
+        $articleCommentFormModel = new ArticleCommentForm();
         return $this->render('view',
-            ['article' => $article]
+            [
+                'article' => $article,
+                'articleCommentFormModel' => $articleCommentFormModel
+            ]
         );
     }
 
