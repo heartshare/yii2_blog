@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="article-info" class="row">
     <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-calendar"></i>&nbsp;
-        <?= Yii::t('app', 'Posted {time}', ['time' => date('Y-m-d H:i:s', $article['create_time'])]) ?>
+        <?= Yii::t('app', 'Posted {time}', ['time' => date('Y-m-d H:i:s', $article['create_at'])]) ?>
     </div>
     <div class="col-lg-3 col-sm-6">
         <i class="glyphicon glyphicon-list"></i>&nbsp;
