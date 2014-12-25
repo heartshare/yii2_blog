@@ -3,25 +3,27 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%article_comments}}".
  *
  * @property string $id
+ * @property string $site
+ * @property string $nickname
+ * @property string $email
  * @property string $content
- * @property string $create_time
+ * @property string $create_at
  * @property string $ip
  * @property string $agent
  * @property string $reply_to
  * @property string $parent_id
  * @property integer $status
  * @property string $article_id
- * @property string $user_id
  *
  * @property Article $article
- * @property User $user
  */
-class ArticleComments extends \yii\db\ActiveRecord
+class ArticleComments extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -37,10 +39,13 @@ class ArticleComments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'user_id'], 'required'],
+            [['content', 'nickname', 'email'], 'required'],
             [['content'], 'string'],
-            [['create_time', 'reply_to', 'parent_id', 'status', 'article_id', 'user_id'], 'integer'],
+            [['create_at', 'reply_to', 'parent_id', 'status', 'article_id'], 'integer'],
             [['ip'], 'string', 'max' => 100],
+            ['email', 'email'],
+            ['nickname', 'string', 'max' => 20],
+            ['site', 'url'],
             [['agent'], 'string', 'max' => 255]
         ];
     }
@@ -53,14 +58,16 @@ class ArticleComments extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'content' => Yii::t('app', 'Content'),
-            'create_time' => Yii::t('app', 'Create Time'),
+            'create_at' => Yii::t('app', 'Create Time'),
             'ip' => Yii::t('app', 'Ip'),
             'agent' => Yii::t('app', 'Agent'),
             'reply_to' => Yii::t('app', 'Reply To'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'status' => Yii::t('app', 'Status'),
             'article_id' => Yii::t('app', 'Article ID'),
-            'user_id' => Yii::t('app', 'User ID'),
+            'nickname' => Yii::t('app', 'Nickname'),
+            'email' => Yii::t('app', 'Email'),
+            'site' => Yii::t('app', 'Site')
         ];
     }
 
@@ -72,11 +79,4 @@ class ArticleComments extends \yii\db\ActiveRecord
         return $this->hasOne(Article::className(), ['id' => 'article_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
 }
