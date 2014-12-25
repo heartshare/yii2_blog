@@ -6,28 +6,29 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\data\Pagination;
 use yii\db\ActiveRecord;
+use yii\helpers\StringHelper;
 
 /**
  * This is the model class for table "{{%article}}".
  *
- * @property string $id
- * @property string $title
- * @property string $content
- * @property string $create_at
- * @property string $update_at
- * @property integer $type
- * @property integer $status
- * @property integer $top
- * @property string $view
- * @property string $sort
- * @property string $slug
- * @property string $excerpt
- * @property string $password
- * @property string $user_id
- * @property integer $category_id
+ * @property string            $id
+ * @property string            $title
+ * @property string            $content
+ * @property string            $create_at
+ * @property string            $update_at
+ * @property integer           $type
+ * @property integer           $status
+ * @property integer           $top
+ * @property string            $view
+ * @property string            $sort
+ * @property string            $slug
+ * @property string            $excerpt
+ * @property string            $password
+ * @property string            $user_id
+ * @property integer           $category_id
  *
- * @property User $user
- * @property Category $category
+ * @property User              $user
+ * @property Category          $category
  * @property ArticleComments[] $articleComments
  */
 class Article extends ActiveRecord
@@ -51,7 +52,7 @@ class Article extends ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'excerpt', 'title'], 'required'],
+            [['content', 'title'], 'required'],
             [['content', 'excerpt'], 'string'],
             [['create_at', 'update_at', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
@@ -125,6 +126,9 @@ class Article extends ActiveRecord
         if (parent::beforeSave($insert)) {
             $this->user_id = Yii::$app->user->id;
             $this->slug = empty($this->slug) ? $this->title : $this->slug;
+            if (empty(trim($this->excerpt))) {
+                $this->excerpt = StringHelper::truncate($this->content, 120);
+            }
             if ($this->isNewRecord) {
             }
             return true;
@@ -174,8 +178,10 @@ class Article extends ActiveRecord
 
     /**
      * 获得最新的文章列表
+     *
      * @param null|string $categoryId 分类ID
-     * @param bool $isHot 是否热门
+     * @param bool        $isHot 是否热门
+     *
      * @return array 文章列表和分页
      */
     public static function getArticleList($categoryId = null, $isHot = false)
@@ -206,7 +212,9 @@ class Article extends ActiveRecord
 
     /**
      * 根据文章ID获取单条文章
+     *
      * @param integer $id 文章ID
+     *
      * @return array|null
      */
     public static function getArticle($id)
