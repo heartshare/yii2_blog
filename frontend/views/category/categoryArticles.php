@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="container-fluid row">
                     <span class="col-lg-5 col-xs-6">
                         <i class="glyphicon glyphicon-calendar"></i>
-                        <?= Yii::t('app', 'Publish Time') ?>：<?= date('Y-m-d H:i:s', $article['create_time']) ?>
+                        <?= Yii::t('app', 'Publish Time') ?>：<?= date('Y-m-d H:i:s', $article['create_at']) ?>
                     </span>
                     <span class="col-lg-3 col-xs-6">
                         <i class="glyphicon glyphicon-list"></i>
