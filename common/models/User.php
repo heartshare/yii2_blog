@@ -12,7 +12,7 @@ use yii\web\IdentityInterface;
 /**
  * This is the model class for table "{{%user}}".
  *
- * @property string $id
+ * @property integer $id
  * @property string $username
  * @property string $nickname
  * @property string $email
@@ -21,9 +21,9 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $profile
  * @property string $avatar
- * @property string $create_time
- * @property string $update_time
- * @property string $active_time
+ * @property integer $create_at
+ * @property integer $update_at
+ * @property integer $active_at
  * @property integer $status
  * @property string $auth_key
  * @property string $password_reset_token
@@ -33,7 +33,6 @@ use yii\web\IdentityInterface;
  *
  * @property Album[] $albums
  * @property Article[] $articles
- * @property ArticleComments[] $articleComments
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -65,8 +64,8 @@ class User extends ActiveRecord implements IdentityInterface
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_time', 'active_time', 'update_time'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_at', 'active_at', 'update_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_at',
                 ],
             ]
         ];
@@ -78,7 +77,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['gender', 'phone', 'create_time', 'update_time', 'active_time', 'status'], 'integer'],
+            [['gender', 'phone', 'create_at', 'update_at', 'active_at', 'status'], 'integer'],
             [['username', 'nickname'], 'string', 'max' => 45],
             [['email', 'password_hash', 'profile', 'site'], 'string', 'max' => 255],
             [['avatar', 'auth_key', 'password_reset_token'], 'string', 'max' => 100],
@@ -116,9 +115,9 @@ class User extends ActiveRecord implements IdentityInterface
             'password_hash' => Yii::t('app', 'Password Hash'),
             'profile' => Yii::t('app', 'Profile'),
             'avatar' => Yii::t('app', 'Avatar'),
-            'create_time' => Yii::t('app', 'Create Time'),
-            'update_time' => Yii::t('app', 'Update Time'),
-            'active_time' => Yii::t('app', 'Active Time'),
+            'create_at' => Yii::t('app', 'Create Time'),
+            'update_at' => Yii::t('app', 'Update Time'),
+            'active_at' => Yii::t('app', 'Active Time'),
             'status' => Yii::t('app', 'Status'),
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
@@ -307,14 +306,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArticleComments()
-    {
-        return $this->hasMany(ArticleComments::className(), ['user_id' => 'id']);
     }
 
     public static function getGendersOptions()
