@@ -38,13 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'content:ntext',
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'create_time',
+                'attribute' => 'create_at',
                 'format' => ['date', 'php:Y-m-d'],
                 'label' => '创建时间'
             ],
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'update_time',
+                'attribute' => 'update_at',
                 'format' => ['date', 'php:Y-m-d'],
                 'label' => '更新时间'
             ],
