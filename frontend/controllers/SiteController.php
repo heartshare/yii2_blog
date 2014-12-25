@@ -66,7 +66,7 @@ class SiteController extends Controller
     {
         $articles = Article::find()
             ->where(['status' => Article::STATUS_PUBLISH, 'password' => ''])
-            ->orderBy('create_time desc')
+            ->orderBy('create_at desc')
             ->limit(3)
             ->asArray()
             ->all();
