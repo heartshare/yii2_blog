@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use backend\assets\SimditorAsset;
+use common\assets\SimditorAsset;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
