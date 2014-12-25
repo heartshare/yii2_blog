@@ -23,7 +23,6 @@ use yii\db\ActiveRecord;
  * @property string $slug
  * @property string $excerpt
  * @property string $password
- * @property string $comments_total
  * @property string $user_id
  * @property integer $category_id
  *
@@ -54,7 +53,7 @@ class Article extends ActiveRecord
         return [
             [['content', 'excerpt', 'title'], 'required'],
             [['content', 'excerpt'], 'string'],
-            [['create_at', 'update_at', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
+            [['create_at', 'update_at', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['slug'], 'unique'],
@@ -100,7 +99,6 @@ class Article extends ActiveRecord
             'excerpt' => Yii::t('app', 'Excerpt'),
             'password' => Yii::t('app', 'Password'),
             'allow_comment' => Yii::t('app', 'Allow Comment'),
-            'comments_total' => Yii::t('app', 'Comments Total'),
             'user_id' => Yii::t('app', 'User ID'),
             'category_id' => Yii::t('app', 'Category ID'),
         ];
@@ -192,7 +190,7 @@ class Article extends ActiveRecord
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         //如果是热门，则按查看次数和评论次数排序；否则按发表时间排序
         if ($isHot) {
-            $model->orderBy('view DESC,comments_total DESC');
+            $model->orderBy('view DESC');
         } else {
             $model->orderBy('create_at DESC');
         }
