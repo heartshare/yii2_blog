@@ -18,7 +18,7 @@ class ArticleCommentsSearch extends ArticleComments
     public function rules()
     {
         return [
-            [['id', 'create_time', 'reply_to', 'parent_id', 'status', 'article_id', 'user_id'], 'integer'],
+            [['id', 'create_at', 'reply_to', 'parent_id', 'status', 'article_id'], 'integer'],
             [['content', 'ip', 'agent'], 'safe'],
         ];
     }
@@ -53,12 +53,11 @@ class ArticleCommentsSearch extends ArticleComments
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'create_time' => $this->create_time,
+            'create_at' => $this->create_at,
             'reply_to' => $this->reply_to,
             'parent_id' => $this->parent_id,
             'status' => $this->status,
             'article_id' => $this->article_id,
-            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content])
