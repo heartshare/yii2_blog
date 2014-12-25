@@ -21,9 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content') ?>
 
-    <?= $form->field($model, 'create_time') ?>
+    <?= $form->field($model, 'create_at') ?>
 
-    <?= $form->field($model, 'modify_time') ?>
+    <?= $form->field($model, 'update_at') ?>
 
     <?php // echo $form->field($model, 'type') ?>
 
@@ -42,8 +42,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'password') ?>
 
     <?php // echo $form->field($model, 'allow_comment') ?>
-
-    <?php // echo $form->field($model, 'comments_total') ?>
 
     <?php // echo $form->field($model, 'user_id') ?>
 
