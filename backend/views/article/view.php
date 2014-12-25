@@ -42,12 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:html',
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'create_time',
+                'attribute' => 'create_at',
                 'format' => ['date', 'php:Y-m-d H:i:s']
             ],
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'update_time',
+                'attribute' => 'update_at',
                 'format' => ['date', 'php:Y-m-d H:i:s']
             ],
             'top',
@@ -56,7 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
             'password',
             'allow_comment',
-            'comments_total',
         ],
     ]) ?>
 
