@@ -38,8 +38,6 @@ $categoryList = ArrayHelper::map(\common\models\Category::find()->asArray()->all
 
     <?= $form->field($model, 'allow_comment')->inline()->radioList(['否','是']) ?>
 
-    <?= $form->field($model, 'comments_total')->textInput(['maxlength' => 10]) ?>
-
     <?= $form->field($model, 'category_id')->dropDownList($categoryList) ?>
 
     <div class="form-group">
