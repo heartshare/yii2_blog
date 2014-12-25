@@ -5,13 +5,16 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'db' =>[
+        'db' => [
             'enableSchemaCache' => true,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'suffix' => '.html'
+        ],
+        'assetManager' => [
+            'linkAssets' => true
         ]
     ],
 ];
