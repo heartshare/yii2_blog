@@ -13,8 +13,8 @@ use yii\db\ActiveRecord;
  * @property string $id
  * @property string $title
  * @property string $content
- * @property string $create_time
- * @property string $update_time
+ * @property string $create_at
+ * @property string $update_at
  * @property integer $type
  * @property integer $status
  * @property integer $top
@@ -23,7 +23,6 @@ use yii\db\ActiveRecord;
  * @property string $slug
  * @property string $excerpt
  * @property string $password
- * @property integer $allow_comment
  * @property string $comments_total
  * @property string $user_id
  * @property integer $category_id
@@ -55,7 +54,7 @@ class Article extends ActiveRecord
         return [
             [['content', 'excerpt', 'title'], 'required'],
             [['content', 'excerpt'], 'string'],
-            [['create_time', 'update_time', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
+            [['create_at', 'update_at', 'type', 'status', 'top', 'view', 'sort', 'allow_comment', 'comments_total', 'user_id', 'category_id'], 'integer'],
             [['title', 'slug', 'password'], 'string', 'max' => 255],
             [['title'], 'unique'],
             [['slug'], 'unique'],
@@ -90,8 +89,8 @@ class Article extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'content' => Yii::t('app', 'Content'),
-            'create_time' => Yii::t('app', 'Create Time'),
-            'update_time' => Yii::t('app', 'Update Time'),
+            'create_at' => Yii::t('app', 'Create Time'),
+            'update_at' => Yii::t('app', 'Update Time'),
             'type' => Yii::t('app', 'Type'),
             'status' => Yii::t('app', 'Status'),
             'top' => Yii::t('app', 'Top'),
@@ -116,8 +115,8 @@ class Article extends ActiveRecord
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_time', 'update_time'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['create_at', 'update_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'update_at',
                 ],
             ]
         ];
@@ -195,7 +194,7 @@ class Article extends ActiveRecord
         if ($isHot) {
             $model->orderBy('view DESC,comments_total DESC');
         } else {
-            $model->orderBy('create_time DESC');
+            $model->orderBy('create_at DESC');
         }
         return [
             'list' => $model
