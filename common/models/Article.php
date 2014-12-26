@@ -126,7 +126,7 @@ class Article extends ActiveRecord
         if (parent::beforeSave($insert)) {
             $this->user_id = Yii::$app->user->id;
             $this->slug = empty($this->slug) ? $this->title : $this->slug;
-            if (empty(trim($this->excerpt))) {
+            if (trim($this->excerpt) == '') {
                 $this->excerpt = StringHelper::truncate($this->content, 120);
             }
             if ($this->isNewRecord) {
@@ -180,7 +180,7 @@ class Article extends ActiveRecord
      * 获得最新的文章列表
      *
      * @param null|string $categoryId 分类ID
-     * @param bool        $isHot 是否热门
+     * @param bool $isHot 是否热门
      *
      * @return array 文章列表和分页
      */
