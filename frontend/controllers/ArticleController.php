@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\ArticleComments;
 use frontend\models\ArticleCommentForm;
 use yii\web\Controller;
 use common\models\Article;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class ArticleController extends Controller
@@ -19,10 +21,12 @@ class ArticleController extends Controller
             Article::findOne($id)->updateCounters(['view' => 1]);
             \Yii::$app->session->set('article_view_' . $id, true);
         }
+        $articleCommentList = ArticleComments::findCommentListByArticleId($id);
         $articleCommentFormModel = new ArticleCommentForm();
         return $this->render('view',
             [
                 'article' => $article,
+                'articleCommentList' => $articleCommentList,
                 'articleCommentFormModel' => $articleCommentFormModel
             ]
         );
@@ -42,6 +46,25 @@ class ArticleController extends Controller
                 'hotArticles' => $hotArticles
             ]
         );
+    }
+
+    /**
+     * 用户添加评论
+     * @return \yii\web\Response
+     * @throws \yii\web\ForbiddenHttpException
+     */
+    public function actionComment()
+    {
+        if (!\Yii::$app->request->isAjax && !\Yii::$app->request->isPost) {
+            throw new ForbiddenHttpException;
+        }
+        $model = new ArticleCommentForm();
+        if ($model->load(\Yii::$app->request->post()) || $model->addComment()) {
+            \Yii::$app->session->setFlash('success', \Yii::t('app', '{type} Published successfully.', ['type' => \Yii::t('app', 'Comments')]));
+        } else {
+            \Yii::$app->session->setFlash('error', \Yii::t('app', '{type} Published failed.', ['type' => \Yii::t('app', 'Comments')]));
+        }
+        return $this->goBack(\Yii::$app->request->referrer);
     }
 
 }
