@@ -138,6 +138,7 @@ return [
     'Send' => '发送',
     'Subject' => '主题',
     'Body' => '主体内容',
+    'Comments' => '评论',
     'Verification Code' => '验证码',
     'If you forgot your password you can' => '如果您忘记了您的密码，您可以',
     'Look Article List' => '查看博文列表',
@@ -149,5 +150,7 @@ return [
     'Publish Time' => '发布时间',
     'No Comments' => '还没人鸟我哟o(╯□╰)o',
     'Comments {total}' => '已有{total}人发表读后感',
-    'Views {total}' => '看热闹打酱油的有{total}人'
+    'Views {total}' => '看热闹打酱油的有{total}人',
+    '{type} Published failed.' => '{type}发表失败。',
+    '{type} Published successfully.' => '{type}发表成功'
 ];
