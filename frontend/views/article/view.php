@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use common\assets\SimditorAsset;
+use yii\captcha\Captcha;
 
 /* @var $this yii\web\View */
 
@@ -13,6 +14,7 @@ SimditorAsset::register($this);
 
 $form = ActiveForm::begin([
     'layout' => 'horizontal',
+    'action' => ['comment'],
     'fieldConfig' => [
         'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{error}\n{endWrapper}",
         'horizontalCssClasses' => [
@@ -73,9 +75,11 @@ $this->registerJs('$("#insert-comment").click(function(){
 
 <?= $form->field($articleCommentFormModel, 'content')->textarea(['id'=>'editor','placeholder'=>'人可以走，把话留下']) ?>
 
-<?= $form->field($articleCommentFormModel, 'article_id', ['template' => '{input}'])->hiddenInput(['value' => $article['id']]) ?>
+<?= $form->field($articleCommentFormModel, 'verifyCode')->widget(Captcha::className(), [
+    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+]) ?>
 
-<?= $form->field($articleCommentFormModel, 'reply_to', ['template' => '{input}'])->hiddenInput(['value' => '']) ?>
+<?= $form->field($articleCommentFormModel, 'article_id', ['template' => '{input}'])->hiddenInput(['value' => $article['id']]) ?>
 
 <?= $form->field($articleCommentFormModel, 'parent_id', ['template' => '{input}'])->hiddenInput(['value' => 0]) ?>
 
