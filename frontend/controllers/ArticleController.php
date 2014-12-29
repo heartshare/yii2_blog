@@ -59,7 +59,7 @@ class ArticleController extends Controller
             throw new ForbiddenHttpException;
         }
         $model = new ArticleCommentForm();
-        if ($model->load(\Yii::$app->request->post()) || $model->addComment()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->addComment()) {
             \Yii::$app->session->setFlash('success', \Yii::t('app', '{type} Published successfully.', ['type' => \Yii::t('app', 'Comments')]));
         } else {
             \Yii::$app->session->setFlash('error', \Yii::t('app', '{type} Published failed.', ['type' => \Yii::t('app', 'Comments')]));
