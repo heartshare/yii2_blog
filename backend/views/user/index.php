@@ -39,13 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'avatar',
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'create_time',
+                'attribute' => 'create_at',
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             // 'update_time',
             [
                 'class' => DataColumn::className(),
-                'attribute' => 'active_time',
+                'attribute' => 'active_at',
                 'format' => ['date', 'php:Y-m-d H:i:s'],
             ],
             // 'status',
