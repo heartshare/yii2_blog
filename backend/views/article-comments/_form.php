@@ -20,8 +20,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'agent')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'reply_to')->textInput(['maxlength' => 10]) ?>
-
     <?= $form->field($model, 'parent_id')->textInput(['maxlength' => 20]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
