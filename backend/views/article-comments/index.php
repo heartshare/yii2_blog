@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\grid\DataColumn;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ArticleCommentsSearch */
@@ -28,14 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'content:ntext',
-            'create_at',
-            'ip',
-            'agent',
+            'nickname',
+            [
+                'label' => '所评论文章标题',
+                'attribute' => 'article.title'
+            ],
+            [
+                'class' => DataColumn::className(),
+                'attribute' => 'create_at',
+                'format' => ['date', 'php:Y-m-d H:i:s'],
+            ],
+            'content:html',
+//            'ip',
+//            'agent',
             // 'reply_to',
             // 'parent_id',
-            // 'status',
-            // 'article_id',
+             'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
