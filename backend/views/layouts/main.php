@@ -9,6 +9,56 @@ use yii\widgets\Breadcrumbs;
 /* @var $content string */
 
 AppAsset::register($this);
+
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+} else {
+    $menuItems[] = [
+        'label' => 'Article',
+        'url' => ['/article/index']
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('app', 'Comments'),
+        'url' => ['/article-comments/index'],
+        'items' => [
+            [
+                'label' => '评论列表',
+                'url' => ['/article-comments/index']
+            ],
+            [
+                'label' => '评论审核',
+                'url' => ['/comments/verify']
+            ]
+        ]
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('app', 'Categories'),
+        'url' => ['/category/index']
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('app', 'User'),
+        'url' => ['/user/index'],
+        'items' => [
+            [
+                'label' => '用户列表',
+                'url' => ['/user/index']
+            ],
+            [
+                'label' => '用户审核',
+                'url' => ['/user/verify']
+            ],
+            [
+                'label' => '添加用户',
+                'url' => ['/user/create']
+            ]
+        ]
+    ];
+    $menuItems[] = [
+        'label' => Yii::t('app', 'Logout') . ' (' . Yii::$app->user->identity->username . ')',
+        'url' => ['/site/logout'],
+        'linkOptions' => ['data-method' => 'post']
+    ];
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -31,44 +81,6 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = [
-            'label' => 'Article',
-            'url' => ['/article/index']
-        ];
-        $menuItems[] = [
-            'label' => 'Categories',
-            'url' => ['/category/index']
-        ];
-        $menuItems[] = [
-            'label' => 'User',
-            'url' => ['/user/index'],
-            'items' => [
-                [
-                    'label' => '用户列表',
-                    'url' => ['/user/index']
-                ],
-                [
-                    'label' => '用户审核',
-                    'url' => ['/user/verify']
-                ],
-                [
-                    'label' => '添加用户',
-                    'url' => ['/user/create']
-                ]
-            ]
-        ];
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ];
-    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
