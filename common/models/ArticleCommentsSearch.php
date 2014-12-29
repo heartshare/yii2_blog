@@ -54,7 +54,6 @@ class ArticleCommentsSearch extends ArticleComments
         $query->andFilterWhere([
             'id' => $this->id,
             'create_at' => $this->create_at,
-            'reply_to' => $this->reply_to,
             'parent_id' => $this->parent_id,
             'status' => $this->status,
             'article_id' => $this->article_id,
