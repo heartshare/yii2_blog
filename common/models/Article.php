@@ -180,7 +180,7 @@ class Article extends ActiveRecord
      * 获得最新的文章列表
      *
      * @param null|string $categoryId 分类ID
-     * @param bool $isHot 是否热门
+     * @param bool        $isHot 是否热门
      *
      * @return array 文章列表和分页
      */
@@ -219,6 +219,6 @@ class Article extends ActiveRecord
      */
     public static function getArticle($id)
     {
-        return $article = static::find()->with(['user', 'category'])->where('id = :id', [':id' => $id])->asArray()->one();
+        return static::find()->with(['user', 'category'])->where('id = :id', [':id' => $id])->asArray()->one();
     }
 }
