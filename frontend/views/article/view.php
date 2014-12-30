@@ -53,11 +53,11 @@ $this->registerJs('$("#insert-comment").click(function(){
         </div>
         <div class="col-lg-3 col-sm-6">
             <i class="glyphicon glyphicon-comment"></i>&nbsp;
-            <!--        --><?php //if ($article['comments_total'] > 0): ?>
-            <!--            --><? //= Yii::t('app', 'Comments {total}', ['total' => $article['comments_total']]) ?>
-            <!--        --><?php //else: ?>
-            <?= Yii::t('app', 'No Comments') ?>
-            <!--        --><?php //endif; ?>
+            <?php if ($articleCommentsTotal > 0): ?>
+                <?= Yii::t('app', 'Comments {total}', ['total' => $articleCommentsTotal]) ?>
+            <?php else: ?>
+                <?= Yii::t('app', 'No Comments') ?>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -73,7 +73,7 @@ $this->registerJs('$("#insert-comment").click(function(){
 
 <?= $form->field($articleCommentFormModel, 'site')->textInput() ?>
 
-<?= $form->field($articleCommentFormModel, 'content')->textarea(['id'=>'editor','placeholder'=>'人可以走，把话留下']) ?>
+<?= $form->field($articleCommentFormModel, 'content')->textarea(['id' => 'editor', 'placeholder' => '人可以走，把话留下']) ?>
 
 <?= $form->field($articleCommentFormModel, 'verifyCode')->widget(Captcha::className(), [
     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
