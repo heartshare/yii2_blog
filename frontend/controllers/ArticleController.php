@@ -22,11 +22,13 @@ class ArticleController extends Controller
             \Yii::$app->session->set('article_view_' . $id, true);
         }
         $articleCommentList = ArticleComments::findCommentListByArticleId($id);
+        $articleCommentsTotal = ArticleComments::countCommentsByArticleId($id);
         $articleCommentFormModel = new ArticleCommentForm();
         return $this->render('view',
             [
                 'article' => $article,
                 'articleCommentList' => $articleCommentList,
+                'articleCommentsTotal' => $articleCommentsTotal,
                 'articleCommentFormModel' => $articleCommentFormModel
             ]
         );
