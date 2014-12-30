@@ -113,6 +113,7 @@ class ArticleComments extends ActiveRecord
 
     /**
      * 根据文章ID查询评论
+     *
      * @param integer $articleId 文章ID
      *
      * @return array
@@ -143,4 +144,16 @@ class ArticleComments extends ActiveRecord
         return $this->hasOne(Article::className(), ['id' => 'article_id']);
     }
 
+    /**
+     * 获取文章的评论统计
+     * @param integer $articleId 文章ID
+     *
+     * @return int
+     */
+    public static function countCommentsByArticleId($articleId)
+    {
+        return static::find()->where('article_id = :article_id', [':article_id' => $articleId])
+            ->andWhere(['status' => self::STATUS_PUBLISH])
+            ->count();
+    }
 }
