@@ -37,34 +37,45 @@ $this->registerJs('$("#insert-comment").click(function(){
 
     <h3><?= Html::encode($article['title']) ?></h3>
 
-    <div id="article-info" class="row">
-        <div class="col-lg-3 col-sm-6">
-            <i class="glyphicon glyphicon-calendar"></i>&nbsp;
-            <?= Yii::t('app', 'Posted {time}', ['time' => date('Y-m-d H:i:s', $article['create_at'])]) ?>
+    <div id="article-view" class="row">
+        <div class="col-lg-8">
+            <div id="article-info" class="row">
+                <div class="col-sm-6">
+                    <i class="glyphicon glyphicon-calendar"></i>&nbsp;
+                    <?= Yii::t('app', 'Posted {time}', ['time' => date('Y-m-d H:i:s', $article['create_at'])]) ?>
+                </div>
+                <div class="col-sm-6">
+                    <i class="glyphicon glyphicon-list"></i>&nbsp;
+                    <?= Yii::t('app', 'Category') ?>
+                    ：<?= Html::a($article['category']['name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
+                </div>
+                <div class="col-sm-6">
+                    <i class="glyphicon glyphicon-eye-open"></i>&nbsp;
+                    <?= Yii::t('app', 'Views {total}', ['total' => $article['view']]) ?>
+                </div>
+                <div class="col-sm-6">
+                    <i class="glyphicon glyphicon-comment"></i>&nbsp;
+                    <?php if ($articleCommentsTotal > 0): ?>
+                        <?= Yii::t('app', 'Comments {total}', ['total' => $articleCommentsTotal]) ?>
+                    <?php else: ?>
+                        <?= Yii::t('app', 'No Comments') ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div id="article-content"><?= $article['content'] ?></div>
+
         </div>
-        <div class="col-lg-3 col-sm-6">
-            <i class="glyphicon glyphicon-list"></i>&nbsp;
-            <?= Yii::t('app', 'Category') ?>
-            ：<?= Html::a($article['category']['name'], Url::toRoute(['/category/' . $article['category']['slug']])) ?>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-            <i class="glyphicon glyphicon-eye-open"></i>&nbsp;
-            <?= Yii::t('app', 'Views {total}', ['total' => $article['view']]) ?>
-        </div>
-        <div class="col-lg-3 col-sm-6">
-            <i class="glyphicon glyphicon-comment"></i>&nbsp;
-            <?php if ($articleCommentsTotal > 0): ?>
-                <?= Yii::t('app', 'Comments {total}', ['total' => $articleCommentsTotal]) ?>
-            <?php else: ?>
-                <?= Yii::t('app', 'No Comments') ?>
-            <?php endif; ?>
+        <div class="col-lg-4">
+            <?= $this->render('//partial/_hotArticle',
+                [
+                    'hotArticles' => $hotArticles
+                ])
+            ?>
         </div>
     </div>
-
-    <hr/>
-
-    <div id="article-content"><?= $article['content'] ?></div>
-
     <hr/>
 
 <?= $form->field($articleCommentFormModel, 'nickname')->textInput() ?>
