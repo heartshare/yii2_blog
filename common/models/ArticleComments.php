@@ -112,13 +112,13 @@ class ArticleComments extends ActiveRecord
     }
 
     /**
-     * 根据文章ID查询评论
+     * 根据文章ID查询最新评论
      *
      * @param integer $articleId 文章ID
      *
      * @return array
      */
-    public static function findCommentListByArticleId($articleId)
+    public static function findNewCommentListByArticleId($articleId)
     {
         $model = static::find()
             ->where(['status' => self::STATUS_PUBLISH])
@@ -129,6 +129,28 @@ class ArticleComments extends ActiveRecord
         return [
             'list' => $model
                 ->limit($pages->limit)
+                ->offset($pages->offset)
+                ->asArray()
+                ->all(),
+            'pages' => $pages
+        ];
+    }
+
+    /**
+     * 根据文章ID查询热门评论
+     * @param integer $articleId 文章ID
+     * @return array
+     */
+    public static function findHotCommentListByArticleId($articleId)
+    {
+        $model = static::find()
+            ->where(['status' => self::STATUS_PUBLISH])
+            ->andWhere('article_id = :article_id', ['article_id' => $articleId]);
+        $countQuery = clone $model;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => 10]);
+        $model->orderBy('vote_up DESC');
+        return [
+            'list' => $model->limit($pages->limit)
                 ->offset($pages->offset)
                 ->asArray()
                 ->all(),
