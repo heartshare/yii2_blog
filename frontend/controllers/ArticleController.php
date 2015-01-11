@@ -21,12 +21,14 @@ class ArticleController extends Controller
             Article::findOne($id)->updateCounters(['view' => 1]);
             \Yii::$app->session->set('article_view_' . $id, true);
         }
-        $articleCommentList = ArticleComments::findCommentListByArticleId($id);
+        $articleCommentList = ArticleComments::findNewCommentListByArticleId($id);
         $articleCommentsTotal = ArticleComments::countCommentsByArticleId($id);
+        $hotArticles = Article::getArticleList($article['id'], true);
         $articleCommentFormModel = new ArticleCommentForm();
         return $this->render('view',
             [
                 'article' => $article,
+                'hotArticles' => $hotArticles,
                 'articleCommentList' => $articleCommentList,
                 'articleCommentsTotal' => $articleCommentsTotal,
                 'articleCommentFormModel' => $articleCommentFormModel
